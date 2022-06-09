@@ -12,3 +12,8 @@ li {
   font-family: 'Bebas Neue', cursive;
   font-size: 30px;
 }
+
+#newItem {
+  width: 60%;
+  margin-left: 10px;
+}

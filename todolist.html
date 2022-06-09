@@ -7,12 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="listcode.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body class="body">
     <div id="head" class="col-sm-12 card-body">
-      <h1 class="card-title">Shit We Gotta Do Today</h1>
+      <h1 class="card-title">Stuff We Gotta Do Today</h1>
     </div>
     <div id="list">
       <ul>
@@ -21,5 +22,7 @@
         </li>
       </ul>
     </div>
+    <input id="newItem" placeholder="New stuff we gotta do today.">
+    <button id="newItemSubmit" onclick="addNewItem()">Add It</button>
   </body>
 </html>
