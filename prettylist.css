@@ -2,13 +2,21 @@
   background-color: #EBD5B3;
 }
 
-h1 {
+.delete {
+  background-color: #787e9a;
+  color: #d8d3d1;
+  font-size: 15px;
+  max-height: 30px;
+  margin-right: 5px;
+}
+
+h2 {
   font-family: 'Bebas Neue', cursive;
   margin-left: 10%;
   font-size: 50px;
 }
 
-li {
+p {
   font-family: 'Bebas Neue', cursive;
   font-size: 30px;
 }
@@ -16,4 +24,8 @@ li {
 #newItem {
   width: 60%;
   margin-left: 10px;
+}
+
+.toDoItem {
+  font-size: 25px;
 }
