@@ -29,3 +29,33 @@ p {
 .toDoItem {
   font-size: 25px;
 }
+
+.toDoItem .complete p {
+  text-decoration: line-through;
+  color: #B8BAC1;
+}
+
+.toDoItem .mark-complete {
+  margin-right: 10px;
+}
+
+.toDoItem p {
+  margin-right: auto;
+}
+
+.filtered-items {
+  margin-left: .5rem;
+  padding: .5rem 1rem;
+  background: none;
+  border: none;
+}
+
+.active {
+  background-color: #4396d6;
+  border-radius: 1rem;
+  color: #3C3C48;
+}
+
+.bottom-content {
+  margin-top: 5px;
+}
