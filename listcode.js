@@ -12,7 +12,7 @@ $(document).ready(function(){
       success: function (response, textStatus) {
         $('#list').empty();
         var activeTasks = 0;
-
+        console.log(filter);
         response.tasks.filter(function (task) {
           if (filter === 'all') {
             return true;
@@ -30,8 +30,8 @@ $(document).ready(function(){
           }
           $('#list').append('<div class="row toDoItem"><p class="col-xs-8">' + task.content + '</p><button class="delete" data-id="' + task.id + '">Delete</button><input type="checkbox" class="mark-complete" data-id="' + task.id + '"' + (task.completed ? 'checked' : '') + '>');
         });
-        $('.to-do-amount').text(activeTasks.length);
-        console.log(activeTasks)
+        /*$('.to-do-amount').text(activeTasks.length);
+        console.log(activeTasks)*/
       },
 
       error: function (request, textStatus, errorMessage) {
@@ -89,7 +89,8 @@ $(document).ready(function(){
       url: 'https://fewd-todolist-api.onrender.com/tasks/' + id + '/mark_complete?api_key=4',
       dataType: 'json',
       success: function (response, textStatus) {
-        getAndDisplayAllTasks();
+        console.log('markTaskComplete filter =' + filter);
+        getAndDisplayAllTasks(filter);
       },
       error: function (request, textStatus, errorMessage) {
         console.log(errorMessage);
@@ -103,7 +104,8 @@ $(document).ready(function(){
       url: 'https://fewd-todolist-api.onrender.com/tasks/' + id + '/mark_active?api_key=4',
       dataType: 'json',
       success: function (response, textStatus) {
-        getAndDisplayAllTasks();
+        console.log('markTaskActive filter =' + filter); 
+        getAndDisplayAllTasks(filter);
       },
       error: function (request, textStatus, errorMessage) {
         console.log(errorMessage);
@@ -114,22 +116,25 @@ $(document).ready(function(){
   $(document).on('change', '.mark-complete', function () {
     if (this.checked) {
       markTaskComplete($(this).data('id'));
-      getAndDisplayAllTasks();
+      //getAndDisplayAllTasks();
     } else {
       markTaskActive($(this).data('id'));
-      getAndDisplayAllTasks();
+      //getAndDisplayAllTasks();
     }
   });
 
   $('#all-button').on('click', function () {
+    filter = 'all';
     getAndDisplayAllTasks('all');
   });
 
   $('#remaining-button').on('click', function () {
+    filter = 'active';
     getAndDisplayAllTasks('active');
   });
 
   $('#completed-button').on('click', function () {
+    filter = 'completed';
     getAndDisplayAllTasks('completed')
   })
 
