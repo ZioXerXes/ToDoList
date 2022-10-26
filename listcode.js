@@ -1,45 +1,49 @@
-$(document).ready(function(){
+var filter = '';
 
-  var getAndDisplayAllTasks = function (filter) {
-    if (!filter) {
-      filter = 'all';
-    }
-
-    $.ajax({
-      type: 'GET',
-      url: 'https://fewd-todolist-api.onrender.com/tasks?api_key=4',
-      dataType: 'json',
-      success: function (response, textStatus) {
-        $('#list').empty();
-        var activeTasks = 0;
-        console.log(filter);
-        response.tasks.filter(function (task) {
-          if (filter === 'all') {
-            return true;
-          }
-          if (filter === 'active') {
-            return !task.completed;
-          }
-          if (filter === 'completed') {
-            return task.completed;
-          }
-        })
-        .forEach(function (task) {
-          if (!task.completed) {
-            activeTasks++;
-          }
-          $('#list').append('<div class="row toDoItem"><p class="col-xs-8">' + task.content + '</p><button class="delete" data-id="' + task.id + '">Delete</button><input type="checkbox" class="mark-complete" data-id="' + task.id + '"' + (task.completed ? 'checked' : '') + '>');
-        });
-        /*$('.to-do-amount').text(activeTasks.length);
-        console.log(activeTasks)*/
-      },
-
-      error: function (request, textStatus, errorMessage) {
-        console.log(errorMessage);
-      }
-    });
+var getAndDisplayAllTasks = function (filter) {
+  if (!filter) {
+    filter = 'all';
   };
 
+  $.ajax({
+    type: 'GET',
+    url: 'https://fewd-todolist-api.onrender.com/tasks?api_key=4',
+    dataType: 'json',
+    success: function (response, textStatus) {
+      $('#list').empty();
+      response.tasks.filter(function (task) {
+        if (filter === 'all') {
+          return true;
+        }
+        if (filter === 'active') {
+          return !task.completed;
+        }
+        if (filter === 'completed') {
+          return task.completed;
+        }
+      })
+      .forEach(function (task) {
+        $('#list').append('<div class="row toDoItem" id="'+task.id+'"><p class="col-xs-8">' + task.content + '</p><button class="delete" data-id="' + task.id + '">Delete</button><input type="checkbox" class="mark-complete" data-id="' + task.id + '"' + (task.completed ? 'checked' : '') + '>');
+      });
+
+      $('#list .toDoItem').sort(function (a,b) {
+        return parseInt(a.id) - parseInt(b.id);
+      }).each(function () {
+        var elem = $(this);
+        elem.remove();
+        $(elem).appendTo('#list');
+      })
+    },
+
+    error: function (request, textStatus, errorMessage) {
+      console.log(errorMessage);
+    }
+  });
+};
+
+$(document).ready(function(){  
+  getAndDisplayAllTasks();
+  
   var createTask = function () {
     $.ajax({
       type: 'POST',
@@ -89,7 +93,6 @@ $(document).ready(function(){
       url: 'https://fewd-todolist-api.onrender.com/tasks/' + id + '/mark_complete?api_key=4',
       dataType: 'json',
       success: function (response, textStatus) {
-        console.log('markTaskComplete filter =' + filter);
         getAndDisplayAllTasks(filter);
       },
       error: function (request, textStatus, errorMessage) {
@@ -104,7 +107,9 @@ $(document).ready(function(){
       url: 'https://fewd-todolist-api.onrender.com/tasks/' + id + '/mark_active?api_key=4',
       dataType: 'json',
       success: function (response, textStatus) {
-        console.log('markTaskActive filter =' + filter); 
+        if (!filter) {
+          let filter = 'all';
+        }
         getAndDisplayAllTasks(filter);
       },
       error: function (request, textStatus, errorMessage) {
